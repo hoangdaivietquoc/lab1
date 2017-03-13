@@ -1,7 +1,7 @@
 package com.polytech.view;
 
 import com.polytech.business.Post;
-import com.polytech.business.PublicationService;
+import com.polytech.business.PublicationServiceImpl;
 import com.polytech.repository.PostRepository;
 import com.polytech.repository.PostRepositoryImpl;
 
@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("coucou polytech");
         PostRepository repository = new PostRepositoryImpl();
-        PublicationService publicationService = new PublicationService(repository);
+        PublicationServiceImpl publicationService = new PublicationServiceImpl(repository);
         Post post = new Post("Luminy est cool");
         publicationService.post(post);
 
