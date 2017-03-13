@@ -12,6 +12,7 @@ public class PostRepositoryImpl implements PostRepository{
 
     List<Post> db = new ArrayList<Post>();
     public void save(Post post) {
+        System.out.println("kdjsdlfk");
         this.db.add(post);
     }
 
