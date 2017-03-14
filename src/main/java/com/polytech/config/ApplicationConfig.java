@@ -7,10 +7,11 @@ import com.polytech.repository.PostRepository;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 
@@ -20,43 +21,39 @@ import javax.sql.DataSource;
  */
 @Configuration
 @PropertySource("classpath:/application.properties")
+@ComponentScan(basePackages = "com.polytech")
+
 public class ApplicationConfig {
     @Autowired
     private Environment environment;
-//    @Value("${datasource.driverName}")
-//    private String driverClassName;
-//
-//    @Value("${datasource.url}")
-//    private String url;
-//
-//    @Value("${datasource.username}")
-//    private String username;
-//
-//    @Value("${datasource.password}")
-//    private String password;
-    @Bean
+
+/*    @Bean
     public DataSource dataSource(){
-        String driverClassName = environment.getProperty("datasource.driverName");
-        String url = environment.getProperty("datasource.url");
-        String username = environment.getProperty("datasource.username");
-        String password = environment.getProperty("datasource.password");
-
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setUsername(username);
-        dataSource.setPassword(password);
-        dataSource.setUrl(url);
-        dataSource.setDriverClassName(driverClassName);
+        dataSource.setUsername(environment.getProperty("datasource.username"));
+        dataSource.setPassword(environment.getProperty("datasource.password"));
+        dataSource.setUrl(environment.getProperty("datasource.url"));
+        dataSource.setDriverClassName(environment.getProperty("datasource.driverName"));
         return dataSource;
+    }*/
+
+    @Bean//(name="dataSource")
+    @Profile("PROD")
+    public DataSource prodDataSource(){
+        BasicDataSource basicDataSource = new BasicDataSource();
+        basicDataSource.setUsername(environment.getProperty("datasource.username"));
+        basicDataSource.setPassword(environment.getProperty("datasource.password"));
+        basicDataSource.setUrl(environment.getProperty("datasource.url"));
+        basicDataSource.setDriverClassName(environment.getProperty("datasource.driverName"));
+        return basicDataSource;
     }
 
-    @Bean
-    public PostRepository postRepository(){
-        return new JdbcPostRepository(dataSource());
+    @Bean//(name="dataSource")
+    @Profile("DEV")
+    public DataSource devDataSource(){
+        EmbeddedDatabaseBuilder embeddedDatabaseBuilder = new EmbeddedDatabaseBuilder();
+        return embeddedDatabaseBuilder.setType(EmbeddedDatabaseType.H2).addScript("create-schema.sql").build();
     }
 
-    @Bean
-    public PublicationService publicationService(PostRepository postRepository){
-        return new PublicationServiceImpl(postRepository);
-    }
 
 }

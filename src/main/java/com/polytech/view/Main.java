@@ -17,7 +17,7 @@ public class Main {
         // System.out.println("coucou polytech");
 
         //PublicationService publicationService = new PublicationServiceImpl(repository);
-
+        System.setProperty("spring.profiles.active","DEV");
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(ApplicationConfig.class);
         PublicationService publicationService = applicationContext.getBean(PublicationService.class);
 

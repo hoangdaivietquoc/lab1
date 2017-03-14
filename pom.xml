@@ -8,6 +8,12 @@
     <artifactId>lab1</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+
+    <context-param>
+        <param-name>spring.profile.default</param-name>
+        <param-value>dev</param-value>
+    </context-param>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -37,6 +43,17 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>6.0.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>4.3.7.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
         </dependency>
     </dependencies>
 
