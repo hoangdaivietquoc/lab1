@@ -2,9 +2,7 @@ package com.polytech.view;
 
 import com.polytech.business.Post;
 import com.polytech.business.PublicationService;
-import com.polytech.business.PublicationServiceImpl;
 import com.polytech.config.ApplicationConfig;
-import com.polytech.repository.PostRepository;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
